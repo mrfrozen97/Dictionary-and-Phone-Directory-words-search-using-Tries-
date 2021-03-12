@@ -1,5 +1,6 @@
 import pandas as pd
 import tkinter as tk
+import random
 
 class Node:
 
@@ -38,8 +39,6 @@ class Tries:
             cur_list = [abc.value for abc in curr.get_children()]
             if i in cur_list:
                 curr = curr.get_children()[cur_list.index(i)]
-               # print("blablabla")
-               # pass
             else:
                 temp = Node(i)
                 curr.add_child(temp)
@@ -131,11 +130,27 @@ def search(str1):
     #print(tree.search_list[:11])
 
     text+="\n"
-    for i in tree.search_list[:11]:
-        text +=("\n"+i)
+    #for i in tree.search_list[:21]:
+    #    text +=("\n"+i)
 
     label = tk.Label(root, text=text, bg='#80c1ff', font=40, anchor='nw', justify='left', bd=10)
     label.place(relx=0.0555, rely=0.21, relwidth=0.848, relheight=0.645)
+
+
+
+    scroll1 = tk.Scrollbar(root)
+    scroll1.place(relx=0.0555, rely=0.21, relwidth=0.848, relheight=0.645)
+
+    mylist = tk.Listbox(root, yscrollcommand=scroll1.set,  bg='#80c1ff', font=40)
+
+    mylist.insert(tk.END, text)
+    mylist.insert(tk.END, " ")
+    for i in tree.search_list:
+        mylist.insert(tk.END, i)
+    mylist.place(relx=0.0555, rely=0.21, relwidth=0.848, relheight=0.645)
+
+    scroll1.config(command=mylist.yview())
+
 
 
 
@@ -144,7 +159,7 @@ WIDTH = 660
 
 
 root = tk.Tk()
-
+root.title("Dictionary Using Tries")
 
 canvas = tk.Canvas(root, height=HEIGHT, width=WIDTH)
 canvas.pack()
@@ -164,7 +179,7 @@ frame1.place(relx=0.045, rely=0.0925, relwidth=0.86, relheight=0.065)
 entry = tk.Entry(root, bg='#80c1ff', font=35, bd=1)
 entry.place(relx=0.05, rely=0.1, relwidth=0.65, relheight=0.05)
 
-button = tk.Button(root, text="Search", bg='gray', fg='blue', command=lambda: search(entry.get()), bd=3)
+button = tk.Button(root, relief=tk.RIDGE, text="Search", bg='#ffc400', fg='blue', command=lambda: search(entry.get()), bd=3)
 button.place(relx=0.70, rely=0.1, relwidth=0.20, relheight=0.05)
 
 
@@ -176,6 +191,5 @@ frame2.place(relx=0.05, rely=0.2, relwidth=0.86, relheight=0.665)
 
 
 root.mainloop()
-
 
 
